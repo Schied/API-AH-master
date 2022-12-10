@@ -20,6 +20,24 @@ exports.GetAll = async (req, res) =>{
     }
 }
 
+exports.GetNombres = async (req, res) =>{
+    let status = true, errorCode ='', message='', data='', statusCode=0, resp={};
+    try{
+        respOrm = await ormMaterial.GetNombres();
+        if(respOrm.err){
+            status = false, errorCode = respOrm.err.code, message = respOrm.err.messsage, statusCode = enum_.CODE_BAD_REQUEST;
+        }else{
+            message = 'Success Response', data = respOrm, statusCode = data.length > 0 ? enum_.CODE_OK : enum_.CODE_NO_CONTENT;
+        }
+        resp = await magic.ResponseService(status,errorCode,message,data);
+        return res.status(statusCode).send(resp);
+    } catch(err) {
+        console.log("err = ", err);
+        resp = await magic.ResponseService('Failure',enum_.CRASH_LOGIC,err,'');
+        return res.status(enum_.CODE_INTERNAL_SERVER_ERROR).send(resp);
+    }
+}
+
 exports.GetById = async (req, res) =>{
     let status = true, errorCode ='', message='', data='', statusCode=0, resp={};
     try{

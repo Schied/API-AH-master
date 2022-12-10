@@ -10,6 +10,16 @@ exports.GetAll = async () =>{
     }
 }
 
+exports.GetNombres = async () =>{
+    try{
+        const response = await pool.query('SELECT nombre_mat FROM material group by nombre_mat');
+        return response.rows;
+    }catch(err){
+        console.log(" err orm-material.GetAll = ", err);
+        return await {err:{code: 123, messsage: err}}
+    }
+}
+
 exports.GetById = async ( Id ) =>{
     try{
         const response = await pool.query(`SELECT * FROM material WHERE codigo_mat = '${Id}'`);

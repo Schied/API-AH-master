@@ -37,6 +37,42 @@ exports.GetById = async ( Id ) =>{
     }
 }
 
+exports.GetByEmail = async ( email ) =>{
+    try{
+        const response = await pool.query(`SELECT * FROM usuario WHERE correo_usu = '${email}'`);
+        return response.rows;
+    }catch(err){
+        console.log(" err orm-user.GetByEmail = ", err);
+        return await {err:{code: 123, messsage: err}}
+    }
+}
+
+exports.GetByNick = async ( nick ) =>{
+    try{
+        const response = await pool.query(`SELECT * FROM usuario WHERE nick_usu = ${nick}`);
+        return response.rows;
+    }catch(err){
+        console.log(" err orm-user.GetByNick = ", err);
+        return await {err:{code: 123, messsage: err}}
+    }
+}
+
+exports.GetByForm = async ( id, email, nick ) =>{
+    try{
+        const cedulaE = await pool.query(`SELECT * FROM usuario WHERE cedula_usu = ${id}`);
+        const emailE = await pool.query(`SELECT * FROM usuario WHERE correo_usu = '${email}'`);
+        const nickE = await pool.query(`SELECT * FROM usuario WHERE nick_usu = '${nick}'`);
+        return {
+            cedula: cedulaE.rowCount>0,
+            email: emailE.rowCount>0,
+            nick: nickE.rowCount>0
+        }
+    }catch(err){
+        console.log(" err orm-user.GetByNick = ", err);
+        return await {err:{code: 123, messsage: err}}
+    }
+}
+
 exports.Store = async ( cedula_usu, nombre_usu, correo_usu, nick_usu, contra_usu, tipo_usu ) =>{
     try{
         const pswHash = bcrypt.hashSync(contra_usu, 10);

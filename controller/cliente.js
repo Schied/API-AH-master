@@ -11,6 +11,7 @@ magic.LogSuccess('[POST] = /clientes/')
 router.get('/clientes/', clientes.GetAll);
 router.get('/clientes/:id', clientes.GetById);
 router.post('/clientes/', clientes.Store);
+router.post('/clientes/exist', clientes.GetByForm);
 
 
 module.exports = router;

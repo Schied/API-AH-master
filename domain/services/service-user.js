@@ -43,6 +43,71 @@ exports.GetById = async (req, res) =>{
     }
 }
 
+exports.GetByEmail = async (req, res) =>{
+    let status = true, errorCode ='', message='', data='', statusCode=0, resp={};
+    try{
+        const email = req.params.email;
+        respOrm = await ormUser.GetByEmail(email);
+        if(respOrm && respOrm.err){
+            status = false, errorCode = respOrm.err.code, message = respOrm.err.messsage, statusCode = enum_.CODE_BAD_REQUEST;
+        }else{
+            if (respOrm) {
+                message = 'Success Response', data= respOrm, statusCode = enum_.CODE_OK;
+            }else{
+                status = false, errorCode = enum_.ID_NOT_FOUND, message = 'ID NOT FOUND', statusCode = enum_.CODE_NOT_FOUND;
+            }
+        }
+        resp = await magic.ResponseService(status,errorCode,message,data);
+        return res.status(statusCode).send(resp);
+    } catch(err) {
+        console.log("err = ", err);
+        return res.status(enum_.CODE_INTERNAL_SERVER_ERROR).send(await magic.ResponseService('Failure',enum_.CRASH_LOGIC,err,''));
+    }
+}
+
+exports.GetByNick = async (req, res) =>{
+    let status = true, errorCode ='', message='', data='', statusCode=0, resp={};
+    try{
+        const nick = req.params.nick;
+        respOrm = await ormUser.GetByNick(nick);
+        if(respOrm && respOrm.err){
+            status = false, errorCode = respOrm.err.code, message = respOrm.err.messsage, statusCode = enum_.CODE_BAD_REQUEST;
+        }else{
+            if (respOrm) {
+                message = 'Success Response', data= respOrm, statusCode = enum_.CODE_OK;
+            }else{
+                status = false, errorCode = enum_.ID_NOT_FOUND, message = 'ID NOT FOUND', statusCode = enum_.CODE_NOT_FOUND;
+            }
+        }
+        resp = await magic.ResponseService(status,errorCode,message,data);
+        return res.status(statusCode).send(resp);
+    } catch(err) {
+        console.log("err = ", err);
+        return res.status(enum_.CODE_INTERNAL_SERVER_ERROR).send(await magic.ResponseService('Failure',enum_.CRASH_LOGIC,err,''));
+    }
+}
+
+exports.GetByForm = async (req, res) =>{
+    let status = true, errorCode ='', message='', data='', statusCode=0, resp={};
+    try{
+        const {id, email, nick } = req.body;
+        respOrm = await ormUser.GetByForm(id, email, nick );
+        if(respOrm && respOrm.err){
+            status = false, errorCode = respOrm.err.code, message = respOrm.err.messsage, statusCode = enum_.CODE_BAD_REQUEST;
+        }else{
+            if (respOrm) {
+                message = 'Success Response', data= respOrm, statusCode = enum_.CODE_OK;
+            }else{
+                status = false, errorCode = enum_.ID_NOT_FOUND, message = 'ID NOT FOUND', statusCode = enum_.CODE_NOT_FOUND;
+            }
+        }
+        resp = await magic.ResponseService(status,errorCode,message,data);
+        return res.status(statusCode).send(resp);
+    } catch(err) {
+        console.log("err = ", err);
+        return res.status(enum_.CODE_INTERNAL_SERVER_ERROR).send(await magic.ResponseService('Failure',enum_.CRASH_LOGIC,err,''));
+    }
+}
 
 exports.Store = async (req, res) =>{
     let status = true, errorCode ='', message='', data='', statusCode=0, resp={};

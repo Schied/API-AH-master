@@ -3,7 +3,7 @@ const format = require('pg-format');
 
 exports.GetAll = async () =>{
     try{
-        const response = await pool.query(`SELECT id_ing, cantidad_ing, to_char( fecha_ing, 'YYYY-MON-DD') as fecha_ing, codigo_mat, cedula_usu FROM ingreso_material`);
+        const response = await pool.query(`SELECT ingreso_material.id_ing, ingreso_material.cantidad_ing, to_char( ingreso_material.fecha_ing, 'YYYY-MON-DD') as fecha_ing, ingreso_material.codigo_mat, ingreso_material.cedula_usu, material.nombre_mat, usuario.nombre_usu FROM ingreso_material INNER JOIN material ON material.codigo_mat = ingreso_material.codigo_mat INNER JOIN usuario ON usuario.cedula_usu = ingreso_material.cedula_usu`);
         return response.rows;
     }catch(err){
         console.log(" err orm-ingresoM.GetAll = ", err);
@@ -13,7 +13,7 @@ exports.GetAll = async () =>{
 
 exports.GetById = async ( Id ) =>{
     try{
-        const response = await pool.query(`SELECT id_ing, cantidad_ing, to_char( fecha_ing, 'YYYY-MON-DD') as fecha_ing, codigo_mat, cedula_usu FROM ingreso_material WHERE id_ing = ${Id}`);
+        const response = await pool.query(`SELECT ingreso_material.id_ing, ingreso_material.cantidad_ing, to_char( ingreso_material.fecha_ing, 'YYYY-MON-DD') as fecha_ing, ingreso_material.codigo_mat, ingreso_material.cedula_usu, material.nombre_mat, usuario.nombre_usu FROM ingreso_material INNER JOIN material ON material.codigo_mat = ingreso_material.codigo_mat INNER JOIN usuario ON usuario.cedula_usu = ingreso_material.cedula_usu WHERE id_ing = ${Id}`);
         return response.rows;
     }catch(err){
         console.log(" err orm-ingresoM.GetById = ", err);
@@ -23,7 +23,7 @@ exports.GetById = async ( Id ) =>{
 
 exports.GetByUsu = async ( Id ) =>{
     try{
-        const response = await pool.query(`SELECT id_ing, cantidad_ing, to_char( fecha_ing, 'YYYY-MON-DD') as fecha_ing, codigo_mat, cedula_usu FROM ingreso_material WHERE cedula_usu = ${Id}`);
+        const response = await pool.query(`SELECT ingreso_material.id_ing, ingreso_material.cantidad_ing, to_char( ingreso_material.fecha_ing, 'YYYY-MON-DD') as fecha_ing, ingreso_material.codigo_mat, ingreso_material.cedula_usu, material.nombre_mat, usuario.nombre_usu FROM ingreso_material INNER JOIN material ON material.codigo_mat = ingreso_material.codigo_mat INNER JOIN usuario ON usuario.cedula_usu = ingreso_material.cedula_usu WHERE cedula_usu = ${Id}`);
         return response.rows;
     }catch(err){
         console.log(" err orm-ingresoM.GetById = ", err);
@@ -33,7 +33,7 @@ exports.GetByUsu = async ( Id ) =>{
 
 exports.GetByDate = async ( Dateini, Datefin ) =>{
     try{
-        const response = await pool.query(`SELECT id_ing, cantidad_ing, to_char( fecha_ing, 'YYYY-MON-DD') as fecha_ing, codigo_mat, cedula_usu FROM ingreso_material WHERE fecha_ing >= '${Dateini}' AND fecha_ing <= '${Datefin}'`);
+        const response = await pool.query(`SELECT ingreso_material.id_ing, ingreso_material.cantidad_ing, to_char( ingreso_material.fecha_ing, 'YYYY-MON-DD') as fecha_ing, ingreso_material.codigo_mat, ingreso_material.cedula_usu, material.nombre_mat, usuario.nombre_usu FROM ingreso_material INNER JOIN material ON material.codigo_mat = ingreso_material.codigo_mat INNER JOIN usuario ON usuario.cedula_usu = ingreso_material.cedula_usu WHERE fecha_ing >= '${Dateini}' AND fecha_ing <= '${Datefin}'`);
         return response.rows;
     }catch(err){
         console.log(" err orm-ingresoM.GetByDate = ", err);

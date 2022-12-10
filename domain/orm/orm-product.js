@@ -12,7 +12,7 @@ exports.GetAll = async () =>{
 
 exports.GetById = async ( Id ) =>{
     try{
-        const response = await pool.query(`SELECT * FROM producto WHERE id_prod = ${Id}`);
+        const response = await pool.query(`SELECT * FROM producto WHERE id_prod = '${Id}'`);
         return response.rows;
     }catch(err){
         console.log(" err orm-product.GetById = ", err);
@@ -63,9 +63,9 @@ exports.getFilters = async() => {
     }
 }
 
-exports.Store = async ( nombre_prod, tipo_prod, material_prod, calzado_prod, genero_prod, talla_prod, cantidad_prod ) =>{
+exports.Store = async ( id_prod, nombre_prod, tipo_prod, material_prod, calzado_prod, genero_prod, talla_prod, cantidad_prod ) =>{
     try{
-        const response = await pool.query(`INSERT INTO producto (nombre_prod, tipo_prod, material_prod, calzado_prod, genero_prod, talla_prod, cantidad_prod) VALUES ($1, $2, $3, $4, $5, $6, $7)`, [nombre_prod, tipo_prod, material_prod, calzado_prod, genero_prod, talla_prod, cantidad_prod]);
+        const response = await pool.query(`INSERT INTO producto (id_prod, nombre_prod, tipo_prod, material_prod, calzado_prod, genero_prod, talla_prod, cantidad_prod) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`, [id_prod, nombre_prod, tipo_prod, material_prod, calzado_prod, genero_prod, talla_prod, cantidad_prod]);
         return true
     }catch(err){
         console.log(" err orm-product.Store = ", err);

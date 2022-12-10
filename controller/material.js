@@ -10,6 +10,7 @@ magic.LogSuccess('[POST] = /materials/')
 magic.LogSuccess('[POST] = /materials/filter')
 
 router.get('/materials/', materials.GetAll);
+router.get('/materials/nombres', materials.GetNombres);
 router.get('/materials/filters', materials.GetFilters);
 router.get('/materials/:id', materials.GetById);
 router.post('/materials/', materials.Store);

@@ -82,9 +82,9 @@ exports.GetFilters = async (req, res) =>{
 exports.Store = async (req, res) =>{
     let status = true, errorCode ='', message='', data='', statusCode=0, resp={};
     try{
-        const { nombre_prod, tipo_prod, material_prod, calzado_prod, genero_prod, talla_prod, cantidad_prod } = req.body;
-        if( nombre_prod && tipo_prod && material_prod && calzado_prod && genero_prod && talla_prod && cantidad_prod ){
-            respOrm = await ormProduct.Store( nombre_prod, tipo_prod, material_prod, calzado_prod, genero_prod, talla_prod, cantidad_prod );
+        const { id_prod, nombre_prod, tipo_prod, material_prod, calzado_prod, genero_prod, talla_prod, cantidad_prod } = req.body;
+        if( id_prod && nombre_prod && tipo_prod && material_prod && calzado_prod && genero_prod && talla_prod && cantidad_prod ){
+            respOrm = await ormProduct.Store( id_prod, nombre_prod, tipo_prod, material_prod, calzado_prod, genero_prod, talla_prod, cantidad_prod );
             if(respOrm.err){
                 status = false, errorCode = respOrm.err.code, message = respOrm.err.messsage, statusCode = enum_.CODE_BAD_REQUEST;
             }else{

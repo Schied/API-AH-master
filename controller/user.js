@@ -14,6 +14,9 @@ magic.LogDanger('[DELETE] = /users/:id')
 
 router.get('/users/', users.GetAll);
 router.get('/users/:id', users.GetById);
+router.get('/users/email/:email', users.GetByEmail);
+router.get('/users/nick/:nick', users.GetByNick);
+router.post('/users/exist', users.GetByForm);
 router.post('/users/', users.Store);
 router.post('/users/signin', users.Signin);
 router.post('/users/verify', users.verifyToken);
